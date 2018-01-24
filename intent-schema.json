@@ -1,0 +1,174 @@
+//copy this code in skill builder ->  code editor -> input json window
+
+{
+  "languageModel": {
+    "types": [
+      {
+        "name": "operator",
+        "values": [
+          {
+            "id": "1",
+            "name": {
+              "value": "plus",
+              "synonyms": []
+            }
+          },
+          {
+            "id": "2",
+            "name": {
+              "value": "minus",
+              "synonyms": []
+            }
+          },
+          {
+            "id": "3",
+            "name": {
+              "value": "multiplied by",
+              "synonyms": []
+            }
+          },
+          {
+            "id": "4",
+            "name": {
+              "value": "divided by",
+              "synonyms": []
+            }
+          }
+        ]
+      }
+    ],
+    "intents": [
+      {
+        "name": "AMAZON.CancelIntent",
+        "samples": [
+          "cancel"
+        ]
+      },
+      {
+        "name": "AMAZON.HelpIntent",
+        "samples": [
+          "help"
+        ]
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": [
+          "exit"
+        ]
+      },
+      {
+        "name": "calculateThis",
+        "samples": [
+          "calculate {firstNum} {operator} {secondNum}",
+          "give me the result of {firstNum} {operator} {secondNum}",
+          "what's {firstNum} {operator} {secondNum}",
+          "give the result of ",
+          "give me the result of {firstNum}",
+          "what's {firstNum} {operator}"
+        ],
+        "slots": [
+          {
+            "name": "firstNum",
+            "type": "AMAZON.NUMBER",
+            "samples": [
+              "{firstNum}"
+            ]
+          },
+          {
+            "name": "secondNum",
+            "type": "AMAZON.NUMBER",
+            "samples": [
+              "{secondNum}"
+            ]
+          },
+          {
+            "name": "operator",
+            "type": "operator",
+            "samples": [
+              "{operator}"
+            ]
+          }
+        ]
+      }
+    ],
+    "invocationName": "my assistant"
+  },
+  "prompts": [
+    {
+      "id": "Confirm.Intent-calculateThis",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "so you want the result of {firstNum} {operator} {secondNum}"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-calculateThis.IntentSlot-firstNum",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "please tell me your first number"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-calculateThis.IntentSlot-secondNum",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "please tell me the second number"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-calculateThis.IntentSlot-operator",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "please specify the operation"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "intents": [
+      {
+        "name": "calculateThis",
+        "confirmationRequired": true,
+        "prompts": {
+          "confirmation": "Confirm.Intent-calculateThis"
+        },
+        "slots": [
+          {
+            "name": "firstNum",
+            "type": "AMAZON.NUMBER",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-calculateThis.IntentSlot-firstNum"
+            }
+          },
+          {
+            "name": "secondNum",
+            "type": "AMAZON.NUMBER",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-calculateThis.IntentSlot-secondNum"
+            }
+          },
+          {
+            "name": "operator",
+            "type": "operator",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-calculateThis.IntentSlot-operator"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
